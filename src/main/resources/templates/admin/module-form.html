@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Module</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        body {
+            background-color: #343a40;
+            color: white;
+        }
+        .form-container {
+            width: 60%;
+            margin: 40px auto;
+            background-color: #495057;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .form-label {
+            color: #ced4da;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-container">
+        <h2 class="text-center">Create New Module</h2>
+        <form th:action="@{/admin/courses/{id}/modules(id=${courseId})}" method="post" th:object="${module}">
+            <input type="hidden" th:if="${module.id}" th:field="*{id}"/>
+            <div class="form-group">
+                <label for="courseName" class="form-label">Module Name</label>
+                <input type="text" class="form-control" th:field="*{name}" id="courseName" placeholder="Enter module name">
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Save</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

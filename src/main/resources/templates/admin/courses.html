@@ -113,6 +113,10 @@
       height: 18%;
       border-collapse: collapse;
     }
+    .super-link {
+      color: #ffffff;
+      /*text-decoration: none;*/
+    }
 
   </style>
 </head>
@@ -145,7 +149,7 @@
     <tbody>
     <tr th:each="course : ${courses}">
       <td th:text="${course.id}"></td>
-      <td th:text="${course.name}">Course 1</td>
+      <td><a class="super-link" th:href="@{/admin/courses/{id}(id=${course.id})}" th:text="${course.name}"></a></td>
       <td th:text="${course.getLastUpdatedAt()}">2021-10-01</td>
       <td th:text="${course.status == 1 ? 'Active' : 'Inactive'}"></td>
       <td>
