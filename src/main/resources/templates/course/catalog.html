@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Catalog</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+    body {
+      background-color: #343a40;
+      color: #ffffff;
+    }
+    .card {
+      background-color: #495057;
+      margin: 10px 0;
+    }
+    .card .btn {
+      background-color: #007bff;
+      border: none;
+    }
+    .card .btn:hover {
+      background-color: #0056b3;
+    }
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-text {
+      margin-bottom: 1rem;
+    }
+    .navbar-logo {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.5rem !important;
+      font-weight: bold;
+    }
+    .navbar {
+      background-color: #25282b !important;
+    }
+    .card-img-top {
+      height: 300px;
+      object-fit: cover;
+    }
+    .navbar-logo {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.5rem !important;
+      font-weight: bold;
+    }
+    .navbar {
+      background-color: #25282b !important;
+    }
+  </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand navbar-logo" th:href="@{/courses}">Iqro</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/courses}">Home</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" th:href="@{/courses/all}">Catalog</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Profile
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Grades</a>
+          <a class="dropdown-item" href="#">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Course Catalog Section -->
+<div class="container my-4">
+  <h1 class="mb-4">Course Catalog</h1>
+  <div class="row">
+    <!-- Course Card -->
+
+    <div th:each="course : ${courses}" class="col-lg-4 mb-4">
+      <div class="card">
+        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Course Image">
+        <div class="card-body">
+          <h5 class="card-title" th:text="${course.name}"></h5>
+          <p class="card-text" th:text="${course.description}"></p>
+          <p class="card-text"><small class="text-muted" th:text="${course.getLastUpdatedAt()}">Last updated: January 1, 2023</small></p>
+          <a href="#" class="btn btn-primary">Enroll</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

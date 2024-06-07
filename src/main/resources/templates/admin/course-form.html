@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Course</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        body {
+            background-color: #343a40;
+            color: white;
+        }
+        .form-container {
+            width: 60%;
+            margin: 40px auto;
+            background-color: #495057;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .form-label {
+            color: #ced4da;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .navbar-logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5rem !important;
+            font-weight: bold;
+        }
+        .navbar {
+            background-color: #25282b !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-container">
+        <h2 class="text-center">Create New Course</h2>
+        <form th:action="@{/admin/courses}" method="post" th:object="${course}">
+            <input type="hidden" th:if="${course.id}" th:field="*{id}" />
+            <div class="form-group">
+                <label for="courseName" class="form-label">Course Name</label>
+                <input type="text" class="form-control" th:field="*{name}" id="courseName" placeholder="Enter course name">
+            </div>
+            <div class="form-group">
+                <label for="courseDescription" class="form-label">Course Description</label>
+                <textarea class="form-control" th:field="*{description}" id="courseDescription" rows="3" placeholder="Enter course description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="courseStatus">Status</label>
+                <input type="number" th:field="*{status}" class="form-control" id="courseStatus" min="0" max="1">
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Save</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
