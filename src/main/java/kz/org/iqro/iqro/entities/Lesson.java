@@ -1,9 +1,18 @@
 package kz.org.iqro.iqro.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "lesson")
 public class Lesson {
     @Id
@@ -20,64 +29,5 @@ public class Lesson {
 
     @OneToMany(mappedBy = "lesson")
     private List<LessonComment> comments;
-
-    public Lesson() {}
-
-    public Lesson(Long id, String title, String videoLink, String notes, Module module, List<LessonComment> comments) {
-        this.id = id;
-        this.title = title;
-        this.videoLink = videoLink;
-        this.notes = notes;
-        this.module = module;
-        this.comments = comments;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getVideoLink() {
-        return videoLink;
-    }
-
-    public void setVideoLink(String videoLink) {
-        this.videoLink = videoLink;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public Module getModule() {
-        return module;
-    }
-
-    public void setModule(Module module) {
-        this.module = module;
-    }
-
-    public List<LessonComment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<LessonComment> comments) {
-        this.comments = comments;
-    }
 }
 
