@@ -24,6 +24,8 @@ public class Course {
     private String description;
     private Timestamp lastUpdatedAt;
     private Short status;
+    @Column(name = "image_link")
+    private String imageLink;
 
     @OneToMany(mappedBy = "course")
     private List<Module> modules;
