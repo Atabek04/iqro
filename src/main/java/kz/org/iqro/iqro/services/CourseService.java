@@ -1,6 +1,7 @@
 package kz.org.iqro.iqro.services;
 
 import kz.org.iqro.iqro.entities.Course;
+import kz.org.iqro.iqro.entities.Enrollment;
 import kz.org.iqro.iqro.repositories.CourseRepository;
 import org.springframework.stereotype.Service;
 
