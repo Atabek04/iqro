@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iqro Course Lessons</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .navbar-horizontal {
+            width: 100%;
+        }
+        .navbar-vertical {
+            width: 250px;
+            background-color: #212529;
+            height: calc(100vh - 56px);
+            position: fixed;
+            top: 56px;
+            left: 0;
+            overflow-y: auto;
+            padding-top: 20px;
+        }
+        .navbar-vertical .nav-link {
+            color: white;
+        }
+        .navbar-vertical .nav-link.active {
+            font-weight: bold;
+        }
+        .navbar-vertical .circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            font-size: 12px;
+        }
+        .navbar-vertical .module-title {
+            color: #ccc;
+            font-weight: bold;
+            padding: 10px 15px;
+            text-transform: uppercase;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .content h2 {
+            margin-bottom: 20px;
+        }
+        .content .video {
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .content .notes {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .content .card {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .content .card .row {
+            display: flex;
+            width: 100%;
+            align-items: center;
+        }
+
+        .content .card .column {
+            flex: 1;
+        }
+
+        .content .card .align-left {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .content .card .align-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content .card .align-right {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .content .card input[type="checkbox"] {
+            transform: scale(1.5);
+            margin-right: 10px;
+            background-color: green;
+            vertical-align: middle;
+        }
+        .navbar-logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5rem !important;
+            font-weight: bold;
+        }
+        .navbar {
+            background-color: #25282b !important;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-horizontal">
+    <a class="navbar-brand navbar-logo" href="/courses">Iqro</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/courses">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/courses/catalog">Catalog</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Profile
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Grades</a>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="navbar-vertical">
+    <div th:each="courseModule : ${courseModules}">
+        <div class="module-title" th:text="${courseModule.name}"></div>
+        <ul class="nav flex-column">
+            <li class="nav-item" th:each="lesson, lessonStat : ${courseModule.getLessons()}">
+                <a class="nav-link" th:href="@{/courses/{course_id}/{lesson_id}(course_id=${course.id}, lesson_id=${lesson.id})}" th:classappend="${#lists.contains(completedLessons, lesson.id)} ? 'completed' : ''">
+                    <span class="circle" th:classappend="${#lists.contains(completedLessons, lesson.id)} ? 'bg-warning' : 'bg-primary'" th:text="${lessonStat.index + 1}"></span>
+                    <span th:text="'  ' + ${lesson.title}"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="content">
+    <h2 th:text="${lesson.title}"></h2>
+    <div class="video">
+        <iframe width="100%" height="450" th:src="${lesson.videoLink}" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="notes">
+        <h3>No notes yet</h3>
+    </div>
+
+    <div class="card">
+        <div class="row">
+            <div class="column align-left">
+                <button class="btn btn-primary previous-btn" th:if="${previousLessonId != null}" th:onclick="'location.href=\'/courses/' + ${course.id} + '/' + ${previousLessonId} + '\''">Previous</button>
+            </div>
+            <div class="column align-center">
+                <form th:action="@{/courses/toggle-complete/{course_id}/{lesson_id}(course_id=${course.id}, lesson_id=${lesson.id})}" method="post">
+                    <input type="hidden" name="_method" value="post" />
+                    <input type="checkbox" id="completeLesson" name="completeLesson" th:checked="${#lists.contains(completedLessons, lesson.id)}" onchange="this.form.submit()">
+                    <span>Mark Lesson Complete</span>
+                </form>
+            </div>
+            <div class="column align-right">
+                <button class="btn btn-primary next-btn" th:if="${nextLessonId != null}" th:onclick="'location.href=\'/courses/' + ${course.id} + '/' + ${nextLessonId} + '\''">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

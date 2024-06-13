@@ -30,4 +30,8 @@ public class Module {
 
     @OneToMany(mappedBy = "module")
     private List<Assignment> assignments;
+
+    public int getTotalLessons() {
+        return lessons.size();
+    }
 }

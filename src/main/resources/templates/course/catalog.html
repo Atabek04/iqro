@@ -77,7 +77,7 @@
                 <a class="nav-link" th:href="@{/courses}">Home</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" th:href="@{/courses/all}">Catalog</a>
+                <a class="nav-link" th:href="@{/courses/catalog}">Catalog</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -104,7 +104,7 @@
         <!-- Course Card -->
         <div th:each="course : ${courses}" class="col-lg-4 mb-4">
             <div class="card">
-                <a th:href="@{/courses/{id}(id=${course.id})}">
+                <a th:href="@{/courses/catalog/{id}(id=${course.id})}">
                     <img th:src="${course.getImageLink()}" class="card-img-top" alt="Course Image">
                 </a>
                 <div class="card-body">

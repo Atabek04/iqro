@@ -29,5 +29,9 @@ public class Lesson {
 
     @OneToMany(mappedBy = "lesson")
     private List<LessonComment> comments;
+
+    public Lesson(Long lessonId) {
+        this.id = lessonId;
+    }
 }
 

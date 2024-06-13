@@ -35,6 +35,9 @@ public class User implements UserDetails {
     @Column(name = "role")
     private String role;  // USER, ADMIN
 
+    public User(Long userId) {
+        this.id = userId;
+    }
 
 
     @Override

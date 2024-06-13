@@ -30,4 +30,21 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private List<Module> modules;
 
+    @Transient
+    private int progressPercentage;
+
+    @Transient
+    private Lesson firstUncompletedLesson;
+
+    @Transient
+    private Lesson lastLesson;
+
+    public Course(Long courseId) {
+        this.id = courseId;
+    }
+
+    public int getTotalLessons() {
+        return modules.stream().mapToInt(Module::getTotalLessons).sum();
+    }
+
 }
