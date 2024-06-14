@@ -67,7 +67,7 @@ public class CourseController {
         String username = principal.getName();
         Optional<User> user = userService.getUserByUsername(username);
         List<Course> enrolledCourses = enrollmentService.getAllEnrolledCourses(user);
-        List<Course> allCourses = courseService.getAllCourses();
+        List<Course> allCourses = courseService.getAllActiveCourses();
 
         for (Course course : enrolledCourses) {
             setCourseProgress(course, user.orElse(new User()).getId());

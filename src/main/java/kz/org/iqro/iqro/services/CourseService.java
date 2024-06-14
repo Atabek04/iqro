@@ -24,6 +24,10 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
+    public List<Course> getAllActiveCourses() {
+        return courseRepository.findByStatus((short) 1);
+    }
+
     public Course getCourseById(int id) {
         return courseRepository.findById(id).orElse(null);
     }

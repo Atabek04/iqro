@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -27,8 +28,8 @@ public class Course {
     @Column(name = "image_link")
     private String imageLink;
 
-    @OneToMany(mappedBy = "course")
-    private List<Module> modules;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Module> modules = new ArrayList<>();
 
     @Transient
     private int progressPercentage;

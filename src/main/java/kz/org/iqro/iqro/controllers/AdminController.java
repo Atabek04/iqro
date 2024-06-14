@@ -72,8 +72,10 @@ public class AdminController {
 
     @PostMapping("/courses/{id}/modules")
     public String saveModule(Module module, @PathVariable int id) {
-        module.setCourse(courseService.getCourseById(id));
-        moduleService.saveModule(module);
+        Course course = courseService.getCourseById(id);
+        module.setCourse(course);
+        course.getModules().add(module); // Add the new module to the course's module list
+        courseService.saveCourse(course); // Save the course along with the new module
         return "redirect:/admin/courses/" + id;
     }
 
